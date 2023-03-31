@@ -1,0 +1,123 @@
+#
+# NC-drill hook : out_file
+#
+# This hook is used for customizing the output NC files. The script
+# recieves as input one parameter : a name of 'csh' script to source.
+# The 'csh' script contains the following variables :
+#
+#
+#set ncLAYER = (drill )
+#set ncMACHINE = (hittachi )
+#set ncNUM_STAGES = (2 )
+#set ncNUM_SPLITS = (1 )
+#set ncSTAGE = (2 )
+#set ncSPLIT = (1 )
+#set ncFORMAT = (Excellon2 )
+#set ncZEROES = (trailing )
+#set ncUNITS = (inch )
+#set ncTOOL_UNITS = (inch )
+#set ncNF = (2.4 )
+#set ncHEADER_PATH = ("" )
+#set ncEOF_PATH = (/genesis/tmp/genesis186b5.1471 )
+#set ncTOOL_NUM      = (1      2      3      )
+#set ncTOOL_SIZE     = (35.354 74     94     )
+#set ncTOOL_SIZE2    = (.035   .074   .094   )
+#set ncTOOL_MAX_HITS = (5000   500    500    )
+#set ncTOOL_HITS     = (134    14     12     )
+#set ncTOOL_SPEED    = (300    300    300    )
+#set ncTOOL_FEED     = (85     85     85     )
+#set ncTOOL_NIBBLE   = (no     yes    no     )
+#set ncTOOL_SLOT     = (yes    no     no     )
+#set ncTOOL_CHANGE   = (""     ""     ""     )
+#set ncTOOL_FINISH   = (""     ""     ""     )
+#set ncFULL_STEP      = ('c1'                              )
+#set ncFULL_SR_START  = ('/genesis/tmp/genesis18715.14636' )
+#set ncFULL_SR_END    = ('/genesis/tmp/genesis18716.14636' )
+#
+# There are 2 environment variables that are passed to the script :
+#
+#   1. 'JOB' - job  name
+#   2. 'STEP'- step name
+#
+# The script can control the following file parts :
+#  1. Header          : output to the $ncHEADER_PATH pathname
+#  2. Enf of file     : output to the $ncEOF_PATH    pathname
+#  3. Tool change     : output to the $ncTOOL_CHANGE  [i] pathnames
+#  4. Tool finish     : output to the $ncTOOL_FINISH  [i] pathnames
+#  5. Full step start : output to the $ncFULL_SR_START[i] pathnames
+#  5. Full step end   : output to the $ncFULL_SR_END  [i] pathnames
+#
+# The script may write only to files that are not empty strings. 
+# The machine file contains flags that indicate which part of the
+# file may be controled by this hook.
+#
+#
+
+source $1
+
+#
+# Header section
+#
+
+if ($ncHEADER_PATH != "") then
+   echo M48 > $ncHEADER_PATH
+   set i = 1
+   while ($i <= $#ncTOOL_NUM) 
+      echo T{$ncTOOL_NUM[$i]}C{$ncTOOL_SIZE2[$i]} >> $ncHEADER_PATH
+      @ i ++
+   end
+   echo % >> $ncHEADER_PATH
+endif
+
+#
+# Tool change/finish commands
+#
+
+set i = 1
+while ($i <= $#ncTOOL_NUM) 
+   if ($ncTOOL_CHANGE[$i] != "") then
+      echo T{$ncTOOL_NUM[$i]} >> $ncTOOL_CHANGE[$i]
+   endif
+   @ i ++
+end
+
+
+# 
+# End of file (EOF) section
+#
+if ($ncEOF_PATH != "") then
+#   echo T00 >  $ncEOF_PATH
+   echo M30 >> $ncEOF_PATH
+endif
+
+
+#
+# Start of FULL step & repeat block
+#
+
+if ($?ncFULL_STEP) then
+   set i = 1
+   while ($i <= $#ncFULL_STEP) 
+      if ($ncFULL_SR_START[$i] != "") then 
+	  
+         echo M47,Start Step = $ncFULL_STEP[$i] > $ncFULL_SR_START[$i]
+      endif
+      @ i ++
+   end
+endif
+
+#
+# End of FULL step & repeat block
+#
+
+if ($?ncFULL_STEP) then
+   set i = 1
+   while ($i <= $#ncFULL_STEP) 
+      if ($ncFULL_SR_END[$i] != "") then 
+         echo M47,End Step = $ncFULL_STEP[$i] > $ncFULL_SR_END[$i]
+      endif
+      @ i ++
+   end
+endif
+
+

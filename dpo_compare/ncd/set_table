@@ -1,0 +1,103 @@
+# 
+# The 'set_table' script recieves as input 2 parameters : 
+#
+#  1. csh script path : the script contains the NC-table and
+#     some other parameters as described bellow
+#  2. out_file : output file that contains several parameters per
+#     drill entry
+#
+# Input 'csh' script example :
+# ============================
+#
+#
+#set ncLAYER = (01-drl )
+#set ncMACHINE = (m1 )
+#set ncTHICKNESS = (0 )
+#set ncSHAPE        = (slot  hole  hole  hole  hole )
+#set ncTYPE         = (PLATE PLATE PLATE PLATE PLATE)
+#set ncSIZE         = (10    16    20    30    32   )
+#set ncTOUCH_COPPER = (no    no    no    no    no   )
+#set ncFLAG         = (0     0     3     0     5   ) 
+#set ncCOUNT        = (10    39735 15    5     40   ) 
+#set ncPLUS_TOL     = (0     0     0     0     0    ) 
+#set ncMINUS_TOL    = (0     0     0     0     0    )
+#set ncDESIGNATOR   = (""    ""    ""    ""    ""   ) 
+#
+#
+# Output file structure :
+# =======================
+#
+# The output file should contain a line of parameters per
+# each input line. In addition, pilot drill entries can
+# be added by this script.
+#
+# Each line must contain the following values :
+#
+#
+#  1. Original index in array (starting with 1)
+#  2. tool_size (mils)
+#  3. pilot indicator (y/n)
+#  4. mode - (regular, nibble, rout)
+#  5. speed - spindle speed
+#  6. feed_rate 
+#  7. nibble_type (machine, sw)
+#  8. stage - drill stage (1,2,3)
+#  9. rout_mode (sep, same)
+# 10. maximal number of hits per bit
+# 11. designator - (if empty - .none)
+#
+#
+
+
+set source_script = $1
+set out_file      = $2
+
+source $source_script
+
+set i = 1
+
+while ($i <= $#ncSHAPE)
+   if ($ncTOUCH_COPPER[$i] == 'yes') then
+      set STAGE = 2
+   else 
+      set STAGE = 1
+   endif
+   
+   set NIBBLE_TYPE = sw
+   set MAX_HITS  = 500
+   set TOOL_SIZE = $ncSIZE[$i]
+   set MODE      = regular
+   
+   # set RANGE1 = `echo "if ($ncSIZE[$i] >= 2032)   1" | bc -l`
+   # set RANGE2 = `echo "if ($ncSIZE[$i] >= 2413)   1" | bc -l`
+   # set RANGE3 = `echo "if ($ncSIZE[$i] >= 2768.6) 1" | bc -l`
+   
+   # if ($RANGE1 == 1 && $RANGE2 != 1) then
+      # set TOOL_SIZE2 = `echo "scale = 3 ; $ncSIZE[$i]-508.0" | bc -l`
+      # echo $i $TOOL_SIZE2 y $MODE 300 85 $NIBBLE_TYPE $STAGE sep $MAX_HITS $i \
+           # >> $out_file
+   # endif
+   
+   # if ($RANGE2 == 1 && $RANGE3 != 1) then
+      # set MAX_HITS  = 5000
+      # if ($ncSHAPE[$i] == 'hole') then
+         # set MODE      = nibble
+         # set NIBBLE_TYPE = sw
+         # set TOOL_SIZE = `echo "scale = 0 ; $ncSIZE[$i]/3.0 + 1.0" | bc -l`
+      # endif
+   # endif
+   
+   # if ($RANGE3 == 1) then
+      # set MODE = rout
+   # endif
+   
+   echo $i $TOOL_SIZE n $MODE 300 85 $NIBBLE_TYPE $STAGE sep $MAX_HITS $i \
+        >> $out_file
+   @ i ++
+end
+
+
+
+
+
+

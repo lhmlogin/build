@@ -1,0 +1,200 @@
+##ERF file of laser mould creation for TEPS
+
+#####################################################
+# ERF header should contain the following items :
+# 1) The name of the action, the way it should appeard in the
+# editor menu
+# 2) The uid (Unique Identifier) of the action. This name MUST
+# be the one used inside the _ODB_START and _ODB_SUMMARY
+# lines inside the action C program.
+# It is recommended to have at least 3 components for the
+# uid (xxxxx_yyyyy_zzzzz):
+# xxxxx - The company/person writing this action
+# yyyyy - The group to which the function belongs
+# zzzzz - Anything else
+# 3) The .modify directive must appear if and only if the program
+# makes changes to the data (e.g. analysis actions should not have
+# it). This is required to facilitate UNDO operation.
+# 4) The .menu directive defines which menu the action should be in.
+# The structure of this line is :
+#. menu n item1 n1 [ item2 n2 ]
+# n - The place in the pulldown menu for this action
+# item1,n1 - The main menu item in which our action (or the optional
+# cascade) goes, and its location
+# if it does not exist
+# item2,n2 - Optional clause which creates a cascade menu by this
+# name at this position (You can use large numbers to put it
+# as the last one)
+#
+
+# .name NLSE("Diverge Fill")
+# .uid frontline_dfm_diverge_fill
+# .modify
+# .menu 9 NLSE("DFM") 6 NLSE("User_DFM") 900
+
+
+.name NLSE("Laser Mould Creation")
+.uid frontline_laser_mould_creation
+.modify
+# .menu 9 NLSE("DFM") 6 NLSE("Hidden_Legacy") 0
+.menu 1 NLSE("DFM") 6 NLSE("User_DFM") 1000
+
+.param layer,pp_ref_layer,			1,NLSE("Ref Layer:")
+.param layer,pp_dest_layer,			2,NLSE("Dest Layer:")
+.param p_mil,pp_min_width,			3,NLSE("Min Width:"),0,500
+.param p_mil,pp_min_height,			4,NLSE("Min Height:"),0,500
+.param p_mil,pp_opt_width,			5,NLSE("Opt Width:"),0,500
+.param p_mil,pp_opt_height,			6,NLSE("Opt Height:"),0,500
+.param p_mil,pp_corner_radius,		7,NLSE("Corner Radius:"),0,100
+.param p_mil,pp_e2e_dist,		    8,NLSE("E2E Distance:"),0,500
+.param p_mil,pp_extend_profile,		9,NLSE("Extend Profile:"),0,500
+
+.model STD
+.units mm
+.colors 991010 999910 109010
+#
+.ranges
+created mould number = 1000,1000,1000
+#
+.pdef
+pp_ref_layer = .affected
+pp_dest_layer = 	
+pp_min_width = 4000
+pp_min_height = 4000		
+pp_opt_width = 5000			
+pp_opt_height = 10000			
+pp_corner_radius = 1000	
+pp_e2e_dist = 2000			
+pp_extend_profile = 1000		
+
+#
+.vars
+
+
+#################################################### #
+# The parameters definition should match the parameters definition inside
+# the C program.
+# The line should be :
+#
+# .param,<type>,<name>,<row number>,<title>,<extension>
+#
+# - type can be :
+# layer - for a given layer list
+# p_mil,p_inch,p_mm,p_microns - pixels in the respective units
+# int,double,string - various constants
+# radio,set,menu - various option fields
+# - name must match the name in the C program (A valid C variable)
+# - row number is the location in the action screen
+# - title is the text displayed in the action screen
+# - extension can be:
+# - length for layer or string
+# - range for p_... , int or double
+# - list of choices for radio,set or option
+#
+
+# .param layer,pp_layer,					1,NLSE("Layer:")
+# .param layer,pp_mask_layer,				2,NLSE("Mask Layer:")
+# .param p_mil,pp_mask_spacing,			3,NLSE("Mask Layer Distance:"),0,500
+# .param radio,pp_symbol_type,			4,NLSE("Symbol Type:"),NLSE("Round"); NLSE("Square");
+# .param p_mil,pp_symbol_size,			3,NLSE("Symbol Size:"),0,500
+# .param p_mm,pp_panel_height,			5,NLSE("Panel Height:"),0,1000
+# .param p_mm,pp_panel_width,				5,NLSE("Panel Width:"),0,1000
+
+# .param double,pp_x_size_area1,			6,NLSE("Area1 X size ratio:"),0,2
+# .param double,pp_y_size_area1,			6,NLSE("Area1 Y size ratio:"),0,2
+# .param double,pp_base_ratio_area1,		6,NLSE("Area1 copper base ratio:"),0,2
+# .param double,pp_extra_ratio_area1,		6,NLSE("Area1 copper extra ratio:"),0,2
+
+# .param double,pp_x_size_area2,			7,NLSE("Area2 X size ratio:"),0,2
+# .param double,pp_y_size_area2,			7,NLSE("Area2 Y size ratio:"),0,2
+# .param double,pp_base_ratio_area2,		7,NLSE("Area2 copper base ratio:"),0,2
+# .param double,pp_extra_ratio_area2,		7,NLSE("Area2 copper extra ratio:"),0,2
+
+# .param double,pp_x_size_area3,			8,NLSE("Area3 X size ratio:"),0,2
+# .param double,pp_y_size_area3,			8,NLSE("Area3 Y size ratio:"),0,2
+# .param double,pp_base_ratio_area3,		8,NLSE("Area3 copper base ratio:"),0,2
+# .param double,pp_extra_ratio_area3,		8,NLSE("Area3 copper extra ratio:"),0,2
+
+# .param double,pp_x_size_area4,			9,NLSE("Area4 X size ratio:"),0,2
+# .param double,pp_y_size_area4,			9,NLSE("Area4 Y size ratio:"),0,2
+# .param double,pp_base_ratio_area4,		9,NLSE("Area4 copper base ratio:"),0,2
+# .param double,pp_extra_ratio_area4,		9,NLSE("Area4 copper extra ratio:"),0,2
+
+# .param double,pp_x_size_area5,			10,NLSE("Area5 X size ratio:"),0,2
+# .param double,pp_y_size_area5,			10,NLSE("Area5 Y size ratio:"),0,2
+# .param double,pp_base_ratio_area5,		10,NLSE("Area5 copper base ratio:"),0,2
+# .param double,pp_extra_ratio_area5,		10,NLSE("Area5 copper extra ratio:"),0,2
+
+
+
+# #
+# # This is a standard model to be used for the program.
+# # models blocks can be added if needed.
+# #
+# # The model contains:
+# # 1) Its name
+# # 2) The units it is defined at
+# # 3) Colors for the histogram coding (in rrggbb format)
+# # 4) Range clauses, whereby the name must match the internal
+# # name in the C program. The numbers following the name
+# # specify the severity classification, e.g. :
+# # spacing = 4,6,8
+# # (The above yields color1 for anything under 4, color2 between
+# # 4 and 6, color3 between 6 and 8 and neutral color for anything
+# # above 8).
+# # Special cases :
+# # - all 0's yields color1 on all values
+# # - An unspecified category yields neutral color on all values
+# # - When numbers are in descending order (e.g. 8,6,4) the logic
+# # is reversed ( >8 yields color1 etc.)
+# # 5) parameters defaults clause
+# # 6) Variables clause (Variables can be read by the C program)
+# #
+# #
+
+# ################### Start of model STD ##################
+
+# .model STD
+# .units mm
+# .colors 991010 999910 109010
+# #
+# .ranges
+# areas = 1000,1000,1000
+# copper_ratio = 1000,1000,1000
+# #
+# .pdef
+# pp_layer = .affected
+# pp_mask_layer = round
+# pp_mask_spacing = 125
+# pp_symbol_type = 1
+# pp_symbol_size = 400
+# pp_panel_height = 400
+# pp_panel_width = 250
+
+# pp_x_size_area1 =0.96
+# pp_y_size_area1 =0.96
+# pp_base_ratio_area1 =0.18
+# pp_extra_ratio_area1 =0.67
+
+# pp_x_size_area2 =0.8
+# pp_y_size_area2 =0.875
+# pp_base_ratio_area2 =0.18
+# pp_extra_ratio_area2 =0.8
+
+# pp_x_size_area3 =0
+# pp_y_size_area3 =0
+# pp_base_ratio_area3 =0
+# pp_extra_ratio_area3 =0
+
+# pp_x_size_area4 =0
+# pp_y_size_area4 =0
+# pp_base_ratio_area4 =0
+# pp_extra_ratio_area4 =0
+
+# pp_x_size_area5 =0
+# pp_y_size_area5 =0
+# pp_base_ratio_area5 =0
+# pp_extra_ratio_area5 =0
+
+# #
+# .vars
