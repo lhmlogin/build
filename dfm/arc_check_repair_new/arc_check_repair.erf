@@ -1,0 +1,29 @@
+##ERF file of laser mould creation for TEPS
+
+.name NLSE("Arc Check and Repair")
+.uid frontline_arc_check_repair
+.modify
+# .menu 9 NLSE("DFM") 6 NLSE("Hidden_Legacy") 0
+.menu 2 NLSE("DFM") 6 NLSE("User_DFM") 1000
+
+.param layer,pp_layer,               1,NLSE("Layer :")
+.param set,pp_type,                  2,NLSE("Actions:"), NLSE("Report Arc");NLSE("Repair Arc")
+#.param p_microns,pp_round,                 3,NLSE("Rounding for radius:") ,1,2000
+
+.model STD
+.units mm
+.colors 991010 999910 109010
+
+#
+.ranges
+arc_radius = 10000,10001,10002
+arc_modified = 10000,10001,10002
+#
+.pdef
+pp_layer = .affected
+# pp_type = Report Arc
+pp_type = .all;-Repair Arc
+#pp_round = 50
+
+#
+.vars
