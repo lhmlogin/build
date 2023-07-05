@@ -1,3 +1,4 @@
 #!/bin/csh
 
-/home/incam/Documents/ilr/source_code.cee/dist/start
+$INCAM_SERVER/site_data/scripts/imp_process/imp_process
+

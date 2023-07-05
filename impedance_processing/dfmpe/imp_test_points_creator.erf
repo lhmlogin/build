@@ -1,7 +1,7 @@
 .name NLSE("Impedance Line Test Points Creator")
 .uid  frontline_imp_test_points_creator
 .modify
-.menu 2 NLSE("DFM") 6 NLSE("User_DFM") 98
+.menu 49 NLSE("DFM") 6 NLSE("Hidden_Legacy") 9
 .menu_nm I
 #
 
