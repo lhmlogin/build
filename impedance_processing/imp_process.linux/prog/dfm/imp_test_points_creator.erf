@@ -5,18 +5,21 @@
 .menu_nm I
 #
 
-.param  p_mil,pp_tp_min_width   ,1,NLSE("Min width of test pad: "),0,100     
-.param  p_mil,pp_tp_max_width   ,1,NLSE("Max width of test pad: "),0,10000
+.param  p_mil,pp_tp_min_width   ,1,NLSE("Min width of test pad: "),0,1000     
+.param  p_mil,pp_tp_min_length   ,1,NLSE("Min length of test pad: "),0,1000    
+.param  p_mil,pp_tp_max_width   ,2,NLSE("Max width of test pad: "),0,10000
 .param  p_inch,pp_imp_min_len    ,2,  NLSE("Min imp line length:") 
 .param  double,pp_imp_min_coverage,3,  NLSE("Min coverage:")
+.param  p_mil,pp_max_diff_pad_dist,3,NLSE("Max diff pad distance:"),0,10000
 .param  int,pp_tp_good_pair_num    ,4,  NLSE("Test pads pair number:")  
 
 .param  label,pp_pg_tp_group         ,5,   NLSE("power_ground test pads parameters:")    //Box:
-.param  p_mil,pp_pgtp_max_search_dist ,6,  NLSE("Max search distance:")        
+.param  p_mil,pp_pgtp_max_search_dist ,6,  NLSE("Max search distance:"),0,10000     
 .param  p_mil,pp_pgtp_min_width      ,7,   NLSE("Min Power_ground test pad width:")  
 .param  label,pp_pg_tp_group_end         ,8,   NLSE("____________________________")    //Box:
 
 .param  set,pp_allow_middle_pad    ,9, NLSE(""),NLSE("allow_middle_pad")  
+.param  set,pp_valid_as_total_length    ,9, NLSE(""),NLSE("valid_as_total_length")  
 .param  double,pp_imp_min_avail_percent  ,10,  NLSE("Min available length percent:")   
 .param  set,pp_imp_has_best_len    ,11, NLSE(""),  NLSE("has_best_length")
 .param  p_inch,pp_imp_best_len     ,12,   NLSE("Best length:")   
@@ -34,11 +37,14 @@
 #
 .pdef
 pp_tp_min_width=10
-pp_tp_max_width=75         
+pp_tp_min_length=10
+pp_tp_max_width=75
+pp_max_diff_pad_dist=100         
 ignore_attrs=.gold_finger             
 pp_imp_min_len=1          
 pp_imp_min_coverage=95      
-pp_allow_middle_pad=.none        
+pp_allow_middle_pad=.none      
+pp_valid_as_total_length=.none  
 pp_imp_min_avail_percent=90              
 pp_pgtp_max_search_dist=20  
 pp_pgtp_min_width =10       

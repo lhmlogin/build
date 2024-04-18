@@ -1,24 +1,30 @@
 {
-        "units":"mm",
+        "units":"inch",
+        "csvpath":"",
 
-        "diff_min_len":"250",
-        "min_diff_percent":"80",
-        "trace_width_tol":"2",
-        "spacing_tol":"10",
-
-        "tp_imp_min_len":"10",
+        "diff_min_len":"1",
+        "min_diff_percent":"1",
+        "trace_width_tol":"0.1",
+        "spacing_tol":"0.5",
+        "impline_path":"",
+        
+        "tp_imp_min_len":"0.5",
         "tp_min_coverage_percent":"90",
-        "tp_num":"1",
-        "tp_min_width":"200",
-        "tp_max_width":"1800",
-        "tp_pgpad_max_dist":"1000",
-        "need_shortest":"yes",
-        "need_middle":"yes",
+        "tp_num":"2",
+        "tp_min_width":"6",
+        "tp_max_width":"75",
+        "tp_pgpad_max_dist":"40",
+        "need_shortest":"no",
+        "need_middle":"no",
 
         "rep_path":"/home/incam/pdf",
         "rep_filename":"",
         "rep_prefix":"",
         "rep_suffix":"",
+        "print_vector_page":"no",
+        "coord":"no",
+        "coord_path":"/tmp/coord.json",
+
 
         "ila_min_cu_dist":"0",
         "ila_min_drill_dist":"0",

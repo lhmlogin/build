@@ -8,6 +8,7 @@
 .param menu,	pp_type,     	            3, NLSE("Imp Type:"),NLSE("single-ended");NLSE("differential")
 .param p_mil,  pp_spacing,                  4, NLSE("Orig Diff spacing:"), 0,100
 .param p_mil,  pp_spacing_tol,              4, NLSE("Minimal Diff spacing tol:"), 0,10
+.param  set,pp_further_net_search    ,5, NLSE(""),NLSE("further_net_search")  
 
 #
 .model STD
@@ -20,6 +21,7 @@ pp_ref_layer=
 pp_copper_layer=
 pp_spacing_tol=0.1
 pp_spacing=3
+pp_further_net_search=.none 
 
 #
 .vars
