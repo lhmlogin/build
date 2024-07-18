@@ -1,0 +1,20 @@
+.name NLSE("Add Features")
+.uid  frontline_add_features
+.modify
+.menu 48 NLSE("DFM") 6 NLSE("Hidden_Legacy") 9
+#
+.param layer,pp_layer,1,      NLSE("Layer: ")
+.param layer,pp_file,2,      NLSE("File: ")
+.param string,pp_path,3,      NLSE("Path: ")
+.param menu,pp_units,     	            3, NLSE("Units:"),NLSE("inch");NLSE("mm")
+#
+.model STD
+.units inch
+#
+.pdef
+pp_layer  =	.affected		
+pp_file  =		
+pp_path = 
+pp_units = inch
+#
+.vars

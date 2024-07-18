@@ -1,0 +1,33 @@
+.name NLSE("impline indexing")
+.uid  frontline_impline_indexing
+.menu 50 NLSE("DFM") 6 NLSE("Hidden_Legacy") 9
+#.menu 2 NLSE("DFM") 6 NLSE("User_DFM") 98
+#
+.param layer ,pp_ref_layer,                 1,	NLSE("Misc Ref Layer:"), 
+.param layer ,pp_copper_layer,              2,	NLSE("Copper Layer:"), 
+.param int,    pp_imp_id,                   3, NLSE("Imp Constraint ID:"), 0, 200 
+.param menu,	pp_type,     	            3, NLSE("Imp Type:"),NLSE("single-ended");NLSE("differential")
+.param p_mil,  pp_spacing,                  4, NLSE("Orig Diff spacing:"), 0,100
+.param p_mil,  pp_spacing_tol,              4, NLSE("Minimal Diff spacing tol:"), 0,10
+.param  set,    pp_further_net_search,      5, NLSE(""),NLSE("further_net_search")  
+.param string,pp_license_server,6,      NLSE("License server IP/Name: ")
+#
+.model STD
+.units inch
+#
+.pdef
+pp_imp_id = 1
+pp_type = single-ended
+pp_ref_layer=
+pp_copper_layer=
+pp_spacing_tol=0.1
+pp_spacing=3
+pp_further_net_search=.none
+pp_license_server = 127.0.0.1
+
+#
+.vars
+
+
+
+
